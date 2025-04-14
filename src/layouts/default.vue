@@ -14,6 +14,7 @@
         <q-btn stretch flat label="Home" to="/" />
         <q-separator class="q-my-md q-mr-md" vertical />
         <q-btn
+          v-if="!auth.user"
           unelevated
           rounded
           color="primary"
@@ -21,16 +22,25 @@
           @click="openAuthDialog"
         />
 
-        <q-btn round flat>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
-          </q-avatar>
+        <q-btn flat class="q-pa-xs">
+          <div class="row items-center no-wrap q-gutter-sm">
+            <span class="text-caption text-grey-8">
+              {{ auth.user.nickname }}님
+            </span>
+            <q-avatar size="32px">
+              <img
+                :src="
+                  auth.user.photoURL || 'https://cdn.quasar.dev/img/avatar.png'
+                "
+              />
+            </q-avatar>
+          </div>
           <q-menu>
             <q-list style="min-width: 100px">
               <q-item clickable v-close-popup to="/mypage/profile">
                 <q-item-section>프로필</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup @click="logout()">
                 <q-item-section>로그아웃</q-item-section>
               </q-item>
             </q-list>
@@ -48,10 +58,13 @@
 
 <script setup>
 import AuthDialog from 'src/components/auth/AuthDialog.vue'
+import { useAuthStore } from 'src/store/auth'
+import { useDialogStore } from 'src/store/dialog'
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+const auth = useAuthStore()
 const route = useRoute()
 
 const pageContainerStyles = computed(() => ({
@@ -61,4 +74,12 @@ const pageContainerStyles = computed(() => ({
 
 const authDialog = ref(false)
 const openAuthDialog = () => (authDialog.value = true)
+const dialog = useDialogStore()
+const logout = async () => {
+  const isConfirm = await dialog.confirmAsync('로그아웃 하시겠습니까?')
+
+  if (!isConfirm) return
+
+  auth.logout()
+}
 </script>
