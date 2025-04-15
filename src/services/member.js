@@ -5,6 +5,18 @@ const api = axios.create({
   withCredentials: true,
 })
 
-export function registerMember({ nickname, email, password }) {
-  return api.post('/register', { nickname, email, password })
+export function registerMember(data) {
+  return api.post('/register', data)
+}
+
+export function signIn(data) {
+  return api.post('/login', data)
+}
+
+export function getProfile(data) {
+  return api.post('/profile', data)
+}
+
+export function updateNickname(data) {
+  return api.put('/nickname', data)
 }

@@ -11,7 +11,7 @@
   position: sticky;
   top: 66px;
   z-index: 2;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: fit-content !important;
 }
 </style>
