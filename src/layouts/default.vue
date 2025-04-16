@@ -24,16 +24,19 @@
 
         <q-btn flat class="q-pa-xs">
           <div class="row items-center no-wrap q-gutter-sm">
-            <span class="text-caption text-grey-8">
-              {{ auth.user.nickname }}님
-            </span>
-            <q-avatar size="32px">
-              <img
-                :src="
-                  auth.user.photoURL || 'https://cdn.quasar.dev/img/avatar.png'
-                "
-              />
-            </q-avatar>
+            <template v-if="auth.user">
+              <span class="text-caption text-grey-8">
+                {{ auth?.user?.nickname }}님
+              </span>
+              <q-avatar size="32px">
+                <img
+                  :src="
+                    auth.user.photoURL ||
+                    'https://cdn.quasar.dev/img/avatar.png'
+                  "
+                />
+              </q-avatar>
+            </template>
           </div>
           <q-menu>
             <q-list style="min-width: 100px">
@@ -62,10 +65,11 @@ import { useAuthStore } from 'src/store/auth'
 import { useDialogStore } from 'src/store/dialog'
 
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const auth = useAuthStore()
 const route = useRoute()
+const router = useRouter()
 
 const pageContainerStyles = computed(() => ({
   maxWidth: route.meta?.width || '1080px',
@@ -80,6 +84,7 @@ const logout = async () => {
 
   if (!isConfirm) return
 
+  router.push('/')
   auth.logout()
 }
 </script>

@@ -20,3 +20,7 @@ export function getProfile(data) {
 export function updateNickname(data) {
   return api.put('/nickname', data)
 }
+
+export function updatePassword(data) {
+  return api.put('/password', data)
+}

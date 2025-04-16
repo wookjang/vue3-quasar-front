@@ -68,7 +68,7 @@ const login = async () => {
       password: password.value,
     })
     auth.setUser(data.user)
-    dialog.showAlert(data.message)
+    dialog.showAlert('', data.message)
   } catch (error) {
     alert(error)
   }
