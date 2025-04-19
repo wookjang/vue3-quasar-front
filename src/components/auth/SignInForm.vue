@@ -70,7 +70,7 @@ const login = async () => {
     auth.setUser(data.user)
     dialog.showAlert('', data.message)
   } catch (error) {
-    alert(error)
+    dialog.showAlert('', error)
   }
 }
 // alert(response.message)

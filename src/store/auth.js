@@ -15,6 +15,7 @@ export const useAuthStore = defineStore(
             nickname: userData.nickname,
             email: userData.email,
             role: userData.role,
+            accessToken: userData.accessToken,
           }
         : null
     }
